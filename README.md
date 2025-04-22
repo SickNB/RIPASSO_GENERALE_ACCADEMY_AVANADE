@@ -77,8 +77,113 @@ Controllare accessi (chi può fare cosa).
 Applicare policy aziendali.
 
 
-
 ### 🔹 Contratti di servizio (SLA):
 SLA (Service Level Agreement): indica la disponibilità garantita (es. 99,9%).
 
 Contratti compositi: più servizi usati insieme devono rispettare tutti il loro SLA per mantenere l’affidabilità dell’intero sistema.
+
+
+
+
+## 🔹 Blocco 2 – Azure Networking (Reti in Azure)
+### 1. 🧱 Virtual Network (VNet) & Subnet
+VNet: è come una rete locale (LAN) ma nel cloud. Tutte le risorse (come VM, database, ecc.) possono stare dentro questa rete e comunicare tra loro.
+
+Subnet: sono sottosezioni della VNet. Dividono la rete in più parti per organizzare meglio le risorse e controllare il traffico tra loro.
+
+💡 Esempio: una subnet per i server web, una per i database.
+
+
+
+
+### 2. 🔒 NSG (Network Security Group) & ASG (Application Security Group)
+NSG: imposta regole su cosa è permesso o bloccato nella rete. Puoi dire, ad esempio: “Blocca tutte le connessioni tranne quelle sulla porta 80 (HTTP)”.
+
+ASG: invece di assegnare regole a singole macchine, puoi creare gruppi di macchine e assegnare le regole al gruppo.
+
+💡 Esempio: raggruppi tutte le VM web in un ASG chiamato “web” e tutte le regole vengono applicate a tutte insieme.
+
+
+
+
+### 3. 🛣️ Routing & UDR (User Defined Routes)
+Azure gestisce automaticamente il traffico tra subnet e VNet.
+
+Ma se vuoi più controllo, puoi creare delle UDR (tabelle di routing personalizzate).
+
+Servono per dirigere il traffico in modi specifici, ad esempio farlo passare da un firewall o un’appliance di rete.
+
+💡 Pensa a UDR come dei cartelli stradali che dicono ai dati dove andare.
+
+
+
+
+### 4. 🔁 VNet Peering
+VNet Peering collega due VNet diverse (anche in regioni diverse) come se fossero una sola.
+
+I dati passano in modo privato e veloce (non passano da internet).
+
+💡 Molto utile per grandi infrastrutture distribuite.
+
+
+
+
+### 5. 🌐 VPN Gateway (P2S e S2S)
+Point-to-Site (P2S): un singolo PC si collega alla rete aziendale Azure (es. da casa o in trasferta).
+
+Site-to-Site (S2S): intera rete locale collegata a una VNet in Azure (via router VPN).
+
+💡 Serve per lavorare in sicurezza anche da remoto.
+
+### 6. 🔄 NAT (Network Address Translation)
+Se una risorsa è in una rete privata, può uscire su Internet tramite NAT Gateway
+
+Non devi configurare NSG complicati, e tutto il traffico esce con un unico IP pubblico.
+
+💡 Utile per VM che devono accedere a Internet ma non vogliono essere esposte.
+
+
+
+
+### 7. ⚖️ Load Balancer (Bilanciatore di Carico)
+Distribuisce le richieste tra più macchine (es. VM) per evitare sovraccarichi.
+
+Public Load Balancer: accessibile da Internet.
+
+Internal Load Balancer: usato solo dentro la rete Azure.
+
+💡 Immagina tanti clienti che visitano un sito: il load balancer manda ciascuno alla VM meno occupata.
+
+
+
+
+### 8. 🛑 Endpoint di Servizio & Filtraggio
+Gli Endpoint di Servizio collegano una VNet direttamente a un servizio Azure (es. Storage), senza passare da Internet.
+
+Filtraggio: con NSG e ASG puoi bloccare traffico indesiderato o consentire solo quello da subnet specifiche.
+
+💡 Sicurezza aumentata senza perdere la connessione ai servizi.
+
+
+
+
+### 9. 🧠 Azure Network Manager
+Strumento centrale per gestire reti su più regioni Azure.
+
+Ti permette di:
+
+Applicare regole NSG a più reti.
+
+Creare policy comuni per tutta l’infrastruttura.
+
+Visualizzare topologie e connessioni.
+
+💡 Ideale per grandi aziende con molte sedi o ambienti diversi.
+
+✅ Ripasso in breve
+
+
+
+
+
+
